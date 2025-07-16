@@ -1,0 +1,166 @@
+
+/* === Base layout === */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    background-color: #eef3f9;
+    color: #222;
+    min-height: 100%;
+}
+
+/* === Page container === */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* === Header/title === */
+.page-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #1a1a1a;
+}
+
+/* === Listing card === */
+.listing-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;               /* subtle border */
+    border-radius: 12px;                  /* soft corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);  /* soft shadow */
+    margin-bottom: 30px;                  /* spacing between cards */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+    padding: 15px;
+}
+
+.listing-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* elevated shadow on hover */
+}
+
+/* === Listing image === */
+.listing-card img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+}
+
+/* === Listing content === */
+.listing-content {
+    padding: 20px;
+}
+
+.listing-content h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+.listing-content p {
+    margin: 0 0 10px;
+    color: #555;
+}
+
+.price {
+    font-weight: bold;
+    color: #007b00;
+    margin-bottom: 15px;
+}
+
+/* === Button === */
+.button {
+    display: inline-block;
+    background-color: #0077cc;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.button:hover {
+    background-color: #005fa3;
+}
+
+/* === Watchlist badge === */
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background-color: #ffcc00;
+    color: #000;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* === Comments section === */
+.comments {
+    margin-top: 30px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.comments h4 {
+    margin-bottom: 15px;
+}
+
+.comment {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+/* === Forms === */
+form {
+    margin-top: 20px;
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    transition: border-color 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #0077cc;
+    outline: none;
+}
+
+input[type="submit"],
+button {
+    background-color: #0077cc;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+input[type="submit"]:hover,
+button:hover {
+    background-color: #005fa3;
+}

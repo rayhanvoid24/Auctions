@@ -1,0 +1,21 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>My Watchlist</h2>
+
+    
+    {% if watch_item %}
+    {% for item in  watch_item %}
+    <div>
+        <h3> <a href="{% url 'listing' item.id %}">{{item.item}}</a></h3>
+    </div>
+    {% if item.image %}
+        <img src="{{ item.image.url }}" style="max-width: 200px;">
+      {% endif %}
+      {% endfor %}
+
+      {% else %}
+      <p>watchlist is empty</p>
+     
+      {% endif %}
+    {% endblock %}

@@ -1,0 +1,62 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+<h2>{{ auction.item }}</h2>
+
+{% if auction.image %}
+<div>
+    <img src="{{ auction.image.url }}" alt="Listing Image" style="max-width: 300px;">
+</div>
+{% endif %}
+
+<p>{{ auction.description }}</p>
+<p>Starting bid: ${{ auction.starting_bid }}</p>
+
+{% if auction.is_closed %}
+  <p><strong>This auction is now closed.</strong></p>
+  {% if auction.winner %}
+    <p><strong>Winner:</strong> {{ auction.winner.username }}</p>
+  {% else %}
+    <p><em>No winner — no bids were placed.</em></p>
+  {% endif %}
+{% endif %}
+
+<h3>Current Bids</h3>
+{% for bid in bids %}
+    <p>${{ bid.amount }} by {{ bid.user.username }}</p>
+{% empty %}
+    <p>No bids yet.</p>
+{% endfor %}
+
+<h3>Comments</h3>
+{% for comment in comments %}
+    <p>{{ comment.user.username }}: {{ comment.comment }}</p>
+{% empty %}
+    <p>No comments yet.</p>
+{% endfor %}
+
+{% if not auction.is_closed %}
+<form action="" method="post">
+    {% csrf_token %}
+    <div>
+        <label>Comment:</label>
+        <input type="text" name="comment">
+    </div>
+    <div>
+        <label>Bid:</label>
+        <input type="number" name="bid" step="0.01">
+    </div>
+    <div>
+        <input type="submit" value="Submit Comment or Bid">
+    </div>
+</form>
+{% endif %}
+
+{% if not auction.is_closed and request.user == auction.user %}
+<form action="" method="post">
+    {% csrf_token %}
+    <button type="submit" name="close_auction">Close Auction</button>
+</form>
+{% endif %}
+
+{% endblock %}
+
