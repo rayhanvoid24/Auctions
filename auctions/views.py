@@ -77,6 +77,7 @@ def create_listing(request):
 
          if request.user.is_authenticated and request.method== "POST":
              try: 
+                 # Create new auction listing
                  new_list= auction_list(
                  item= request.POST.get("item"),
                  description= request.POST.get("Description"),
@@ -88,15 +89,17 @@ def create_listing(request):
                  new_list.save()
                  return redirect("index")
              
+             # If something goes wrong during creation
              except Exception as e:
                  return render(request, "auctions/create.html", {
                 "categories": categories,
                 "error": f"Error creating listing: {str(e)}"
             })
-             
+           # If not POST, just show the create listing form   
          return render(request, "auctions/create.html", {
           "categories": categories,
           })
+# View a specific auction listing
 
 @login_required 
 def listing (request, list_id):
@@ -106,10 +109,11 @@ def listing (request, list_id):
     is_watching = request.user.watch_list.filter(id=auction.id).exists()
     highest_bid= bids.first().amount if bids.exists() else auction.starting_bid
     top_bid= bids.first()
-    
+    # Handle form submissions
     if request.method== "POST":
        comment_text = request.POST.get("comment") 
        
+        # Handle comments
 
        if comment_text:
            Comment.objects.create (
@@ -117,7 +121,7 @@ def listing (request, list_id):
                user= request.user,
                auction= auction
            )
-
+        # Handle bids
     if "bid" in request.POST:
          if auction.is_closed:
             messages.error(request, "This auction is closed. No more bids are allowed.")
@@ -139,7 +143,7 @@ def listing (request, list_id):
                messages.error(request,"your bid must be higher ")
             except ValueError: 
               messages.error(request, "plesse enter a valid number")
-
+         # Handle watchlist toggle (only if auction is open)
     if "toggle_watch" in request.POST and auction.is_closed== False:
         if is_watching:
                 request.user.watch_list.remove(auction)
@@ -147,7 +151,7 @@ def listing (request, list_id):
                 request.user.watch_list.add(auction)
 
         return redirect("listing", list_id=list_id)
-    
+        # Close auction (only auction owner can do this)
     if request.user == auction.user:
      if "close_auction" in request.POST:
         if not auction.is_closed:
@@ -161,7 +165,7 @@ def listing (request, list_id):
 
             
 
-           
+            # Render the listing page
     return render(request,"auctions/listing.html", {
            "auction": auction,
            "comments": comments,
@@ -170,7 +174,7 @@ def listing (request, list_id):
 
               })
    
-
+# Display all items in user's watchlist
 @login_required
 def watchlist(request):
     watch_list= request.user.watch_list.all()
